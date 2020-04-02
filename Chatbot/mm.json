@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "magicmirror-chatbot-dkqbju",
+  "private_key_id": "91a1a6e283caced49b010fd1491ca37b276e94aa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCtmuKUnyxFbBvr\nqbLwnnaKNgKR2m29JOfKHw8uOCylRRA+Llh422lkstQWzCcYaVRj1wchxRZXLdwD\nhFGidK/v4O4k4LiyZP2qDbfnryAke2ndzErDDaIky8H5a+5RO3v0/mCN4lPSGbSV\n/5syi6OaKmKqxF8kBucgmSyopZMK/RJHUDgGWccmfmt0gU0gpLSjWAmvugrPagPy\n2+EFm4+PWHZFws8eXSTAv38UX9n1ji3Pmg+PnFiUkH+cgw5R4r+rBAIGlfRRgN78\nwhY3WtceuOCUv5qR6ZCHSVKAUzc1LYd9zrftcCot51Xc2PUeDVa75Q3rpyK4mb4k\nr+iYV+ivAgMBAAECggEAKEvHRBAeSo7pfC4LpuZhRXt75Tb6OekTFEtZTrUjR8lc\nF9LSHltvfzwzFoeUm4n3WKVUtnX01Y+Dfh18hWToYZmoLU8sD9x5NLuycEiqAU3U\nKPN+dv/3HutcvvRagOh5wUg6STS7mAz3acnG0FixRNuJw3GJU+d2Ro7HWu3zz5zE\nImYR9XkjzBqxrb0vN6MbkftPLIiXv3Mx/HVGvn/nd6hwZRpXt2qeiuclfighbXI7\nWJWVhe3qV055U1tujoK2/MMSBRM3GO8OJnytrY+fvjjKEiIsuuvmQf3tzWT8umw8\ndQDfmn3PIqbfdb1IiyR4UhaTk+sdAvh0BvQHFzbbwQKBgQDlxi8GKVGRCb3jBwBF\nHqSmnXeGaCwQHUO6zc3lbs9EIuiBkrTfNov9+Peiyw+mjZH5Qd2Zl/WUNr5+V3IZ\nA99IwsaWgW+BOEHMRPXbKQfWKzt3Dq5m76m3ratgVXw25XOFf4cE74/hgJgWQT5/\n5VfBZ73uRinOzY9CaNCyCLIQZwKBgQDBa3v/QAAt8jv1idzmic2mIxxWLlC3t2r9\njjanlVb/kQ70Ioy+zZeQX1imJJlhJ2+AxkPuVdW/okQpOWhvlXsgNsMg7q4FCR8u\nW8wpHMZtbqr6zuXv5WthVWgY4pBI0eXqi/TS6OrTND4uolKG2dhTuHidSDZt3ePL\nPkK872eYeQKBgQCzu5KM/0UObtBaBd/wMUgaDJKyUEonULzqIpIsJcF7StMUh+1z\nrPdUcqtCbBSR86t7jkoJGxS+GxRnP3/AkYbXI4SztgvCyH6vikHGbRH0NV0OhC1n\n15CqXO7xK+0+A72Zb2fuNHYXrr9IqUB6SquaXcvz1m5dle25xMN6f9LJgQKBgEV3\nxzcr02StJZ/QfghG4heTcK/7Pn5dYA3lL/gMiQyNGuPQLOCykocF158EchoUwdVs\nYCWPqo+DRhvQRJQfCfPN91MypkmktxA9ZBw3+4R+ROaDvM3mhiSVOigF53BgAsW0\nsp+1i/GDR/oTzrQkNbAMBzXmI7ZeBVyP5gRZr8lxAoGAOlqHA6I9bKgP0IoZHrv+\n9hbMLJ/JgEAId92IS4soO2ecekGCCpqwY+bfgEN8em2VvO5qhRvWcjpcXioUVG8C\nWMOIiWktvBsA2l285XwVBytlh8UQIGkRuYIWgeKzysnn67/GxR/oZ0msfb40AFX2\nw5gbnoZ/DwRXDGnRWhI16UI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-mixrlx@magicmirror-chatbot-dkqbju.iam.gserviceaccount.com",
+  "client_id": "111974046671123962103",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-mixrlx%40magicmirror-chatbot-dkqbju.iam.gserviceaccount.com"
+}
