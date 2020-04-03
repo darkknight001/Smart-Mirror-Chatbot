@@ -7,7 +7,7 @@ class Chatbot:
     def __init__(self):
        
         
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = '/home/pi/Desktop/Chatbot/mm.json'
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = '/home/pi/Desktop/Smart-Mirror-Chatbot/Chatbot/mm.json'
 
         DIALOGFLOW_PROJECT_ID = 'magicmirror-chatbot-dkqbju'
         SESSION_ID = 'me'

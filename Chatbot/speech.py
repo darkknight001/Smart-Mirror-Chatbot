@@ -53,16 +53,13 @@ class Recognizer:
         except sr.UnknownValueError:
             # speech was unintelligible
             response["error"] = "Unable to recognize speech"
-
         return response
     
     def recognize(self):
         return Recognizer.recognize_speech_from_mic(self.recognizer, self.microphone)['transcription']
     
     def say(self,text):
-        tts = gTTS(text, lang='en')
-        #tts.save("temp.mp3")
-        path = r'/home/pi/Desktop/Chatbot/./speech.sh '
+        path = r'/home/pi/Desktop/Smart-Mirror-Chatbot/Chatbot/./speech.sh '
         os.system((path+text))
-        #os.remove("temp.mp3")
+
         
