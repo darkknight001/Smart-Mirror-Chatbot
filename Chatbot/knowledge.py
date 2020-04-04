@@ -20,12 +20,13 @@ class Knowledge:
       x = datetime.datetime.now()
       period = "am"
       hour = x.hour
+      minute = lambda x : str(x) if int(x>9) else("0"+str(x))
       if hour>12 and hour!=24:
         hour = x.hour-12
         period = "pm"
       elif hour == 24:
         hour = 12
-      str_time = "It is "+ str(hour) + ":"+str(x.minute)+ " "+ period 
+      str_time = "It is "+ str(hour) + " : "+ str(minute(x.minute)) + " "+ period.upper() 
       return str_time
     
     def get_day(self):
@@ -52,7 +53,7 @@ class Knowledge:
             temperature = y["temp"]
             t_max = y["temp_max"]
             t_min = y["temp_min"]
-            wheather = x["weather"][0]["description"]
-            return {'city' : city, 'temperature': int(temperature-273.15),'temp_max':t_max,'temp_min':t_min,'forcast':weather}
+            weather = x["weather"][0]["description"]
+            return {'city' : city, 'temperature': str(temperature-273.15),'temp_max':t_max,'temp_min':t_min,'forcast':weather.title()}
         else:
-            print("Failed");
+            return "Failed"

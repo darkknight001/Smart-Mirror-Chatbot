@@ -56,15 +56,15 @@ class Assistant(object):
         
     def __decide_intent(self,userInput):       
         query_result = chatter.chat(userInput)
-     #Parsing intent from response
+        print(query_result)
+       
+	
+
+ #Parsing intent from response
         intent = query_result.intent.display_name
-        
-        action = query_result.action
-        print("name:",action)
         input_text = query_result.query_text
-        print(input_text)
         output = query_result.fulfillment_text
-        if intent in self.basic_intent or "smalltalk" in action:
+        if intent in self.basic_intent:
             
             requests.get("http://localhost:8080/statement?text=%s" % output)
             print('you said : {}\nbot said:{}'.format(input_text,output))
@@ -72,42 +72,44 @@ class Assistant(object):
         
         elif intent == 'Time':
             time_str = kt.get_time()
-            requests.get("http://localhost:8080/statement?text=%s" % time_str)
-            rec.say(time_str.replace("'","\'"))
+            requests.get("http://localhost:8080/statement?text=%s" % output)
+            rec.say(time_str)
         
         elif intent == 'Date':
             res = kt.get_date()
-            requests.get("http://localhost:8080/statement?text=%s" % res)
-            rec.say(res.replace("'","\'"))
+            requests.get("http://localhost:8080/statement?text=%s" % output)
+            rec.say(res)
         
-        elif intent == 'weather': 
-            res = kt.find_weather()
-            string = "Right now in " + res['city'] + ", it is " +res['temperature'] + "° Celcius and " + res['forcast']
-            print(string)
-            rec.say(string.replace("'","\'"))
-            requests.get("http://localhost:8080/statement?text=%s" % string)
+        elif intent == 'Day':
+            res = kt.get_day()
+            requests.get("http://localhost:8080/statement?text=%s" % output)
+            rec.say(res)
+        
+        #elif intent == 'weather':
             
+         #   res = kt.find_weather()
+          #  string = "It's " +
         
         elif intent == 'news':
             res = kt.get_news()
             if res:
                 requests.post("http://localhost:8080/news",data = json.dumps({"articles":res}))
-                rec.say("here is some news for you!".replace("'","\'"))
+                rec.say("Here's some news for you!")
             else:
                 rec.say("Troblue Finding news for you")                
         
         elif intent == 'faculty photograph':
-            im_url = 'ece'
+            im_url = '/home/pi/Downloads/ECE_department.jpg'
             requests.get("http://localhost:8080/clear")
-            requests.get("http://localhost:8080/data?text=%s" % im_url)
+            body = {'url':im_url}
+            #requests.get("http://localhost:8080/face")
+            requests.get("http://localhost:8080/image?text=%s" % im_url)
 
         elif intent == 'faculty information':
             
-            f_name = query_result.parameters.fields["teacher_name"].string_value
+            f_name = query_result.parameters.fields["teacher_name"]
             rec.say(output)
-            im_url = f_name
-            requests.get("http://localhost:8080/clear")
-            requests.get("http://localhost:8080/data?text=%s" % im_url)
+            
             #in case of no parameters
             if f_name != "":
                 print("\n\n INFO :%s\n\n" %f_name)
@@ -118,11 +120,8 @@ class Assistant(object):
                 rec.say(result.fulfillment_text)
                 
         elif intent == 'time table faculty':
-            f_name = query_result.parameters.fields["teacher_name"].string_value
+            f_name = query_result.parameters.fields["teacher_name"]
             rec.say(output)
-            im_url = f_name
-            requests.get("http://localhost:8080/clear")
-            requests.get("http://localhost:8080/data?text=%s" % im_url)
             if f_name != "":
                 print("\n\n timetable :%s\n\n" %f_name)
             else:
@@ -132,22 +131,10 @@ class Assistant(object):
                 rec.say(result.fulfillment_text)
                 
         elif intent == 'time table class':
-            section = query_result.parameters.fields["section"].string_value
-            college_year = query_result.parameters.fields["college_year"].string_value
-            print(section)
-            print(college_year)
-            im_url = section+" "+college_year
-            requests.get("http://localhost:8080/clear")
-            requests.get("http://localhost:8080/data?text=%s" % im_url)
-            print("\n\n timetable :%s\n\n" %im_url)
+            pass
         
-        elif intent == "Default Fallback Intent":
-            requests.get("http://localhost:8080/statement?text=%s" % output)
-            print('fallback : '.format(output))
-            rec.say(output)
-            
         else:
-            rec.say("unable get it!, come again".replace("'","\'"))
+            rec.say("I didn't get it!")
             print("fallback")
             wake_word = False
             self.__start_listening()
