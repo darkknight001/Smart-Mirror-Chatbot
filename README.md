@@ -1,7 +1,7 @@
 # Smart-Mirror-Chatbot
 Smart Mirror Chatbot.
 
-##Installation
+## Installation
 
 > **Install latest version of MagicMirror Project**
 
@@ -10,14 +10,14 @@ Smart Mirror Chatbot.
 ```bash
 git clone https://github.com/darkknight001/Smart-Mirror-Chatbot.git
 ```
-###Step 2: Create virtual environment environment:
+### Step 2: Create virtual environment environment:
 
 ```bash
 sudo apt install python3-venv
 python3 -m venv magicmirror
 source magicmirror/bin/activate
 ```
-###Step 3: Install the Dependencies(In virtual Environment):
+### Step 3: Install the Dependencies(In virtual Environment):
 
 -**Install Pyaudio**
 
@@ -43,7 +43,7 @@ and then test it using:
 ```bash
 /home/{USER}/Smart-Mirror-Chatbot/scripts/./speech.sh this is a test
 ```
-###Step 4: Test the chatbot:
+### Step 4: Test the chatbot:
 
 -In Virtual environment:
 
