@@ -9,7 +9,7 @@ from threading import Thread
 from knowledge import Knowledge
 
 
-#Few basic Configurations:
+#Few basic Configuration:
 
 whether_api = '8dde38a27814bf3a025657f5632fdb40'
 
