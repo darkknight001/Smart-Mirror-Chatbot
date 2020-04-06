@@ -5,7 +5,9 @@ Smart Mirror Chatbot.
 
 > **Install latest version of MagicMirror Project**
 
-###Step 1: Clone the Repository:
+### Step 0: Test Audio
+
+### Step 1: Clone the Repository:
 
 ```bash
 git clone https://github.com/darkknight001/Smart-Mirror-Chatbot.git
