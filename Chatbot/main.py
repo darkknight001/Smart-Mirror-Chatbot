@@ -73,7 +73,7 @@ class Assistant(object):
     def __decide_intent(self,userInput):       
         query_result = chatter.chat(userInput)
         requests.get("http://localhost:8080/clear")
-     #Parsing intent from response
+        #Parsing intent from response
         intent = query_result.intent.display_name
         
         action = query_result.action
