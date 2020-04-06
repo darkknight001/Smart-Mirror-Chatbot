@@ -54,6 +54,6 @@ class Knowledge:
             t_max = y["temp_max"]
             t_min = y["temp_min"]
             weather = x["weather"][0]["description"]
-            return {'city' : city, 'temperature': str(temperature-273.15),'temp_max':t_max,'temp_min':t_min,'forcast':weather.title()}
+            return {'city' : city, 'temperature': str(int(temperature-273.15)),'temp_max':t_max,'temp_min':t_min,'forcast':weather.title()}
         else:
             return "Failed"

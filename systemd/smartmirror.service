@@ -1,0 +1,18 @@
+[Unit]
+Description=Smart Mirror Chatbot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Environment=VIRTUAL_ENV=/home/pi/magicmirror
+Environment=PATH=/home/pi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/home/pi/magicmirror/bin/python3 /home/pi/Smart-Mirror-Chatbot/Chatbot/main.py
+
+WorkingDirectory=/home/pi/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

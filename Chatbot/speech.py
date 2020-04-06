@@ -1,7 +1,9 @@
 import speech_recognition as sr
-from gtts import gTTS
 import os
+import subprocess
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+ROOT_PATH = os.path.dirname(dir_path)
 class Recognizer:
     
     def __init__(self):
@@ -59,7 +61,7 @@ class Recognizer:
         return Recognizer.recognize_speech_from_mic(self.recognizer, self.microphone)['transcription']
     
     def say(self,text):
-        path = r'/home/pi/Desktop/Smart-Mirror-Chatbot/Chatbot/./speech.sh '
-        os.system((path+text))
+        path = "{}/scripts/./speech.sh".format(ROOT_PATH)
+        subprocess.Popen([path, text], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         

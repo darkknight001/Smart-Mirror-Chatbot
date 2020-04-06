@@ -1,13 +1,16 @@
 import os
 import dialogflow
 from google.api_core.exceptions import InvalidArgument
+import subprocess
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+ROOT_PATH = os.path.dirname(dir_path)
 class Chatbot:
     
     def __init__(self):
        
         
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = '/home/pi/Desktop/Smart-Mirror-Chatbot/Chatbot/mm.json'
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = dir_path+'/mm.json'
 
         DIALOGFLOW_PROJECT_ID = 'magicmirror-chatbot-dkqbju'
         SESSION_ID = 'me'
