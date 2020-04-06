@@ -77,7 +77,6 @@ class Assistant(object):
         intent = query_result.intent.display_name
         
         action = query_result.action
-        print("name:",action)
         input_text = query_result.query_text
         print(input_text)
         output = query_result.fulfillment_text
@@ -113,14 +112,14 @@ class Assistant(object):
             else:
                 rec.say("Troblue Finding news for you")                
         
-        elif intent == 'faculty photograph':
+        elif intent == 'Faculty Photograph':
             im_url = 'ece'
             rec.say(output)
             requests.get("http://localhost:8080/clear")
             requests.get("http://localhost:8080/data?text=%s" % im_url)
         
         elif intent == 'Contact Information':
-            im_url = 'contacts'
+            im_url = 'Staff'
             rec.say(output)
             requests.get("http://localhost:8080/data?text=%s" % im_url)
 
@@ -131,14 +130,14 @@ class Assistant(object):
             #in case of no parameters
             if f_name != "":
                 print("\n\n INFO :%s\n\n" %f_name)
-                requests.get("http://localhost:8080/data?text=%s" % f_name)
+                requests.get("http://localhost:8080/info?text=%s" % f_name)
             else:
                 followupInput = self.__start_listening(followup=True)
                 result = chatter.chat(followupInput)
                 print(result.fulfillment_text)
                 rec.say(result.fulfillment_text)
                 f_name = query_result.parameters.fields["teacher_name"].string_value
-                requests.get("http://localhost:8080/data?text=%s" % f_name)
+                requests.get("http://localhost:8080/info?text=%s" % f_name)
 
                 
         elif intent == 'time table faculty':
@@ -147,14 +146,14 @@ class Assistant(object):
             #in case of no parameters
             if f_name != "":
                 print("\n\n Time_table :%s\n\n" %f_name)
-                requests.get("http://localhost:8080/data?text=%s" % f_name)
+                requests.get("http://localhost:8080/faculty?text=%s" % f_name)
             else:
                 followupInput = self.__start_listening(followup=True)
                 result = chatter.chat(followupInput)
                 print(result.fulfillment_text)
                 rec.say(result.fulfillment_text)
                 f_name = query_result.parameters.fields["teacher_name"].string_value
-                requests.get("http://localhost:8080/data?text=%s" % f_name)
+                requests.get("http://localhost:8080/faculty?text=%s" % f_name)
                 
         elif intent == 'time table class':
             section = query_result.parameters.fields["section"].string_value
@@ -162,9 +161,9 @@ class Assistant(object):
             print(section)
             print(college_year)
             rec.say(output)
-            im_url = section+" "+college_year
+            im_url = section+"_"+college_year
             requests.get("http://localhost:8080/clear")
-            requests.get("http://localhost:8080/data?text=%s" % im_url)
+            requests.get("http://localhost:8080/class?text=%s" % im_url)
             print("\n\n timetable :%s\n\n" %im_url)
         
         elif intent == "Default Fallback Intent":
