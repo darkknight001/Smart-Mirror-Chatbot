@@ -8,6 +8,7 @@ import time
 import snowboydecoder
 import subprocess
 import signal
+import pyrebase
 from threading import Thread
 from knowledge import Knowledge
 
@@ -18,6 +19,24 @@ ROOT_PATH = os.path.dirname(dir_path)
 whether_api = '8dde38a27814bf3a025657f5632fdb40'
 
 
+firebase_config = {    
+    "apiKey": "AIzaSyAFQ3ezz5EzFRe1LcC7Gq5bOXN4mYIbwNQ",
+    "authDomain": "imagea-8cd39.firebaseapp.com",
+    "databaseURL": "https://imagea-8cd39.firebaseio.com",
+        "projectId": "imagea-8cd39",
+    "storageBucket": "imagea-8cd39.appspot.com",
+    "messagingSenderId": "484670069784",
+    "appId": "1:484670069784:web:a7eec3b4943fbdb3b2b76d",
+    "measurementId": "G-T6NEF7Y1MW"
+}
+
+firebase = pyrebase.initialize_app(firebase_config)
+
+
+storage = firebase.storage()
+db = firebase.database()
+
+fb_token = None
 chatter = Chatbot()
 rec = Recognizer()
 kt = Knowledge(weather_api_key=whether_api)
@@ -33,7 +52,8 @@ class Assistant(object):
                        sensitivity = 0.75, audio_gain = 1)
         self.basic_intent = ['Default ','College Name','CSE HOD','Dean Academics','Dean Admin','facts','fun.1','fun.2','fun.3','fun.4','HOD ECE','Introduction','IT HOD','jokes','Mission','Principal','PEO','PO','Vision','wake word','ECE']
         self.t1 = Thread(target = self.start_detector)
-
+        
+        
     def signal_handler(self,signal, frame):
         self.interrupted = True
 
@@ -62,11 +82,13 @@ class Assistant(object):
             if userInput is not None:  
                 self.__decide_intent(userInput)
             else:
+                rec.say("unable get it!, come again")
                 self.__start_listening()
         else:
             if userInput is not None:  
                 return userInput
             else:
+                rec.say("unable get it!, come again")
                 self.__start_listening(followup=True)
            
         
@@ -80,7 +102,7 @@ class Assistant(object):
         input_text = query_result.query_text
         print(input_text)
         output = query_result.fulfillment_text
-        if intent in self.basic_intent or "smalltalk" in action:
+        if "smalltalk" in action:
             
             requests.get("http://localhost:8080/statement?text=%s" % output)
             print('you said : {}\nbot said:{}'.format(input_text,output))
@@ -113,16 +135,19 @@ class Assistant(object):
                 rec.say("Troblue Finding news for you")                
         
         elif intent == 'Faculty Photograph':
-            im_url = 'ece'
+            path_on_cloud = "ece.jpg"
+            path = storage.child(path_on_cloud).get_url(token=None)
             rec.say(output)
-            requests.get("http://localhost:8080/clear")
-            requests.get("http://localhost:8080/data?text=%s" % im_url)
+            body = {'url': path}
+            requests.post("http://localhost:8080/image", data=json.dumps(body))
         
         elif intent == 'Contact Information':
-            im_url = 'Staff'
+            path_on_cloud = "staff.jpg"
+            path = storage.child(path_on_cloud).get_url(token=None)
             rec.say(output)
-            requests.get("http://localhost:8080/data?text=%s" % im_url)
-
+            body = {'url': path}
+            requests.post("http://localhost:8080/image", data=json.dumps(body))
+        
         elif intent == 'faculty information':
             
             f_name = query_result.parameters.fields["teacher_name"].string_value
@@ -130,14 +155,20 @@ class Assistant(object):
             #in case of no parameters
             if f_name != "":
                 print("\n\n INFO :%s\n\n" %f_name)
-                requests.get("http://localhost:8080/info?text=%s" % f_name)
+                path_on_cloud = "faculty/"+ f_name +".jpg"
+                path = storage.child(path_on_cloud).get_url(token=None)
+                body = {'url': path}
+                requests.post("http://localhost:8080/image", data=json.dumps(body))
             else:
                 followupInput = self.__start_listening(followup=True)
                 result = chatter.chat(followupInput)
                 print(result.fulfillment_text)
                 rec.say(result.fulfillment_text)
                 f_name = query_result.parameters.fields["teacher_name"].string_value
-                requests.get("http://localhost:8080/info?text=%s" % f_name)
+                path_on_cloud = "faculty/"+ f_name +".jpg"
+                path = storage.child(path_on_cloud).get_url(token=None)
+                body = {'url': path}
+                requests.post("http://localhost:8080/image", data=json.dumps(body))
 
                 
         elif intent == 'time table faculty':
@@ -146,14 +177,20 @@ class Assistant(object):
             #in case of no parameters
             if f_name != "":
                 print("\n\n Time_table :%s\n\n" %f_name)
-                requests.get("http://localhost:8080/faculty?text=%s" % f_name)
+                path_on_cloud = "Time_table/Faculty_time_table/"+ f_name +".png"
+                path = storage.child(path_on_cloud).get_url(token=None)
+                body = {'url': path}
+                requests.post("http://localhost:8080/image", data=json.dumps(body))
             else:
                 followupInput = self.__start_listening(followup=True)
                 result = chatter.chat(followupInput)
                 print(result.fulfillment_text)
                 rec.say(result.fulfillment_text)
                 f_name = query_result.parameters.fields["teacher_name"].string_value
-                requests.get("http://localhost:8080/faculty?text=%s" % f_name)
+                path_on_cloud = "Time_table/Faculty_time_table/"+ f_name +".png"
+                path = storage.child(path_on_cloud).get_url(token=None)
+                body = {'url': path}
+                requests.post("http://localhost:8080/image", data=json.dumps(body))
                 
         elif intent == 'time table class':
             section = query_result.parameters.fields["section"].string_value
@@ -161,21 +198,66 @@ class Assistant(object):
             print(section)
             print(college_year)
             rec.say(output)
-            im_url = section+"_"+college_year
-            requests.get("http://localhost:8080/clear")
-            requests.get("http://localhost:8080/class?text=%s" % im_url)
-            print("\n\n timetable :%s\n\n" %im_url)
+            path_on_cloud = "Time_table/students_time_table/"+ section+"_"+college_year +".png"
+            path = storage.child(path_on_cloud).get_url(token=None)
+            body = {'url': path}
+            requests.post("http://localhost:8080/image", data=json.dumps(body))
         
+        elif intent == "notice faculty":
+            announement = db.child("Announcement Teacher").child().get()
+            l = []
+            for date,val in announement.val().items():
+                d,m,y,s_no = date.split("_")
+                date = d+"/"+m+"/"+y
+                data = {}
+                data["serial"] = s_no
+                data["date"] = date
+                data["description"] = val
+                l.append(data)
+            print(json.dumps(l))
+            rec.say(output)
+            requests.post("http://localhost:8080/notice",data=json.dumps(l))
+
+        elif intent == "notice student":
+            announement = db.child("Announcement Student").child().get()
+            l = []
+            for date,val in announement.val().items():
+                d,m,y,s_no = date.split("_")
+                date = d+"/"+m+"/"+y
+                data = {}
+                data["serial"] = s_no
+                data["date"] = date
+                data["description"] = val
+                l.append(data)
+            print(json.dumps(l))
+            rec.say(output)
+            requests.post("http://localhost:8080/notice",data=json.dumps(l))
+
+        elif intent == "notice general":
+            announement = db.child("Notice_IPU").child().get()
+
+            l = []
+            for date,val in announement.val().items():
+                d,m,y,s_no = date.split("_")
+                date = d+"/"+m+"/"+y
+                data = {}
+                data["serial"] = s_no
+                data["date"] = date
+                data["description"] = val
+                l.append(data)
+            print(json.dumps(l))
+            rec.say(output)
+            requests.post("http://localhost:8080/notice",data=json.dumps(l))
+            
         elif intent == "Default Fallback Intent":
             requests.get("http://localhost:8080/statement?text=%s" % output)
             print('fallback : '.format(output))
             rec.say(output)
             
         else:
-            rec.say("unable get it!, come again".replace("'","\'"))
-            print("fallback")
-            wake_word = False
-            self.__start_listening()
+            requests.get("http://localhost:8080/statement?text=%s" % output)
+            print('you said : {}\nbot said:{}'.format(input_text,output))
+            rec.say(output)
     
 
 

@@ -17,49 +17,34 @@ module.exports = NodeHelper.create({
 	        self.sendSocketNotification("STATEMENT", {"text":text})
 	        res.sendStatus(200);
 	    });
-
-
-		this.expressApp.get('/info', function (req, res) {
-			text = req.query.text
-			console.log("./photos/faculty/"+text+".jpg");
-	        self.sendSocketNotification("INFO", {"text":text})
-	        res.sendStatus(200);
-   			
+		
+		this.expressApp.post('/image', function (req, res) {
+	    	var data = "";
+   			req.on('data', function(chunk){ data += chunk})
+   			req.on('end', function(){
+       			req.rawBody = data;
+       			req.jsonBody = JSON.parse(data);
+       			url = req.jsonBody.url
+       			console.log(url)
+	        	self.sendSocketNotification("IMAGE", {"imageurl":url})
+	        	res.sendStatus(200);
+   			})
 	    });
-	    
-   		this.expressApp.get('/data', function (req, res) {
-			text = req.query.text
-			console.log(text);
-	        self.sendSocketNotification("DATA", {"text":text})
-	        res.sendStatus(200);
-   			
-	    }); 
 	
-	   
-		this.expressApp.get('/faculty', function (req, res) {
-			text = req.query.text
-			console.log(text);
-	        self.sendSocketNotification("FACULTY", {"text":text})
-	        res.sendStatus(200);
-   			
+	    this.expressApp.post('/notice', function (req, res) {
+	        var data = "";
+   			req.on('data', function(chunk){ data += chunk})
+   			req.on('end', function(){
+       			req.rawBody = data;
+				   req.jsonBody = JSON.parse(data);
+				   console.log(req.jsonBody)
+	        	self.sendSocketNotification("NOTICE", {"notices":req.jsonBody})
+	        	res.sendStatus(200);
+   			})
 	    });
-	    
-		this.expressApp.get('/class', function (req, res) {
-			text = req.query.text
-			console.log(text);
-	        self.sendSocketNotification("CLASS", {"text":text})
-	        res.sendStatus(200);
-   			
-	    });
-	 
-
-	    this.expressApp.get('/image', function (req, res) {
-	    	imageUrl = req.query.text;
-	        self.sendSocketNotification("IMAGE", {"image":imageUrl})
-	        res.sendStatus(200);
-   			
-	    });
-
+	
+	
+	
 	    this.expressApp.post('/weather', function (req, res) {
 	        var data = "";
    			req.on('data', function(chunk){ data += chunk})

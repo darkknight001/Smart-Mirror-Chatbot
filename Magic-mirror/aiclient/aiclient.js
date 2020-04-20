@@ -67,72 +67,86 @@ Module.register("aiclient",{
 				wrapper.className = "medium bright";
 				break
 			case "IMAGE":
-				console.log("entered in image")
-				var url = this.text;
-				console.log(url);
-				var imag = document.createElement("img");
-				imag.src=url;
-				wrapper.appendChild(imag);
+				wrapper.innerHTML = "<img src=\"" + this.imageURL + "\" style=\"border:1px solid black;width:1600px;height:900px;\">"
 				break
-			case "DATA":
-				span.innerHTML="";
-				var imag = document.createElement("img");
-				imag.style.height="800px";
-				imag.src=this.file("./photos/"+this.text+".jpg");
-				wrapper.appendChild(imag);
-				break
-			case "INFO":
-				span.innerHTML="";
-				var imag = document.createElement("img");
-				imag.style.height="800px";
-				imag.src=this.file("./photos/faculty/"+this.text+".jpg");
-				wrapper.appendChild(imag);
-				break
-			case "FACULTY":
-				span.innerHTML="";
-				var imag = document.createElement("img");
-				imag.style.height="550px";
-				imag.src=this.file("./photos/Time_table/Faculty_time_table/"+ this.text +".png");
-				wrapper.appendChild(imag);
-				break
-			case "CLASS":
-				span.innerHTML="";
-				var imag = document.createElement("img");
-				imag.style.height="600px";
-				imag.src=this.file("./photos/Time_table/students_time_table/"+ this.text +".png");
-				wrapper.appendChild(imag);
-				break
-				
-//				if(this.text=="ece a third year"){
-//					var imag = document.createElement("img");
-//					imag.style.height="550px";
-//					imag.src=this.file("./photos/ece.png")//"https://drive.google.com/file/d/1DoMrowKZWqCCsy-lheTrNRmD4dlPzmzf/view";
-//					wrapper.appendChild(imag);
-//				}else if(this.text=="Niranjan Bhattacharyya"){
-//					var imag = document.createElement("img");
-//					imag.style.height="700px";
-//					imag.src=this.file("./photos/HOD_ECE.jpg")//"https://drive.google.com/file/d/1DoMrowKZWqCCsy-lheTrNRmD4dlPzmzf/view";
-//					wrapper.appendChild(imag);
-//				}else if(this.text=="ece"){
-//					var imag = document.createElement("img");
-//					imag.style.height="700px";
-//					imag.src=this.file("./photos/ECE_department.jpg")//"https://drive.google.com/file/d/1DoMrowKZWqCCsy-lheTrNRmD4dlPzmzf/view";
-//					wrapper.appendChild(imag);
-//				}else if(this.text=="risheek kumar mishra"){
-//					var imag = document.createElement("img");
-//					imag.style.height="490px";
-//					imag.src=this.file("./photos/risheekSir.png")//"https://drive.google.com/file/d/1DoMrowKZWqCCsy-lheTrNRmD4dlPzmzf/view";
-//					wrapper.appendChild(imag);
-//				}
-//				else if(this.text=="contacts"){
-//					var imag = document.createElement("img");
-//					imag.style.height="600px";
-//					imag.src=this.file("./photos/contacts.jpg")//"https://drive.google.com/file/d/1DoMrowKZWqCCsy-lheTrNRmD4dlPzmzf/view";
-//					wrapper.appendChild(imag);
-//				}
-				
-//				break
+			
+			case "NOTICE":
+				var title = document.createElement('div')
+				title.innerHTML = "NOTICES"
+				title.style.fontSize = "50px"
+				title.style.color = "#cccccc"
+				title.style.margin = "30px"
 
+				wrapper.appendChild(title)
+
+				var table1 = document.createElement("table");
+				table1.className = "medium";
+				table1.style.border = "1px solid white"
+
+				var t_row = document.createElement("tr");
+				// t_row.style.padding = "5 px"	
+				table1.appendChild(t_row);
+
+				var s = document.createElement("th");
+				s.style.color= "#f5c842"
+				s.innerHTML = "NOTICE NO.";
+				s.style.padding = "15px"
+				s.style.borderTop = "1px solid white" 
+				s.style.borderBottom = "1px solid white"
+				t_row.appendChild(s);
+
+				var d = document.createElement("th");
+				d.style.color= "#f5c842"
+				d.innerHTML = "DATE";
+				//d.style.padding = "30px"
+				d.style.borderBottom = "1px solid white" 
+				d.style.borderTop = "1px solid white"
+				t_row.appendChild(d);
+
+				var des = document.createElement("th");
+				des.style.color= "#f5c842"
+				des.innerHTML = "DESCRIPTION"
+				//des.style.padding = "30px"
+				des.style.borderBottom = "1px solid white" 
+				des.style.borderTop = "1px solid white"
+				t_row.appendChild(des);
+
+				for (var n in this.notices) {
+					var notices = this.notices[n];
+
+					var row = document.createElement("tr");
+					// row.style.padding = "5 px"
+					table1.appendChild(row);
+
+					var s_no = document.createElement("td");
+					s_no.className = "light";
+					s_no.innerHTML = "BPIT/ECE/" + notices.serial;
+					s_no.style.padding = "8px"
+					s_no.style.borderTop = "1px solid white" 
+					s_no.style.borderBottom = "1px solid white" 
+					row.appendChild(s_no);
+
+					var n_date = document.createElement("td");
+					n_date.className = "light";
+					n_date.innerHTML = notices.date;
+					//n_date.style.padding = "30px"
+					n_date.style.borderTop = "1px solid white" 
+					n_date.style.borderBottom = "1px solid white" 
+					row.appendChild(n_date);
+
+					var desc = document.createElement("td");
+					desc.className = "light";
+					//desc.style.margin = "15px"
+					desc.innerHTML = notices.description
+					desc.style.borderTop = "1px solid white" 
+					desc.style.borderBottom = "1px solid white" 
+					row.appendChild(desc);
+					
+				}
+				
+				wrapper.appendChild(table1)
+				break
+				
 			case "WEATHER":
 				var small = document.createElement("div");
 				small.className = "normal medium";
@@ -193,8 +207,6 @@ Module.register("aiclient",{
 				title.className = "xlarge light";
 				title.innerHTML = "Listening";
 				wrapper.appendChild(title);
-				
-				//wrapper.innerHTML = "<img src=\"" + this.file("face.gif") + "\" style=\"border:1px solid black;max-width:100%;\">"
 				break
 			case "HOLIDAYS":
 				var title = document.createElement('div')
@@ -283,21 +295,9 @@ Module.register("aiclient",{
 			this.current_selection = "HOLIDAYS"
 			this.holiday = payload.holiday
 			this.updateDom(this.config.animationSpeed);
-		} else if (notification == "DATA") {
-			this.current_selection = "DATA"
-			this.text = payload.text
-			this.updateDom(this.config.animationSpeed);
-		} else if (notification == "INFO") {
-			this.current_selection = "INFO"
-			this.text = payload.text
-			this.updateDom(this.config.animationSpeed);
-		} else if (notification == "FACULTY") {
-			this.current_selection = "FACULTY"
-			this.text = payload.text
-			this.updateDom(this.config.animationSpeed);
-		} else if (notification == "CLASS") {
-			this.current_selection = "CLASS"
-			this.text = payload.text
+		} else if (notification == "NOTICE") {
+			this.current_selection = "NOTICE"
+			this.notices = payload.notices
 			this.updateDom(this.config.animationSpeed);
 		}
 	}
