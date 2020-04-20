@@ -30,12 +30,8 @@ pip3 install pyaudio
 -**Install python libraries**
 
 ```bash
-pip3 install dialogflow
-pip3 install google-api-core
-pip3 install SpeechRecognition
-pip3 install feedparser
-pip3 install sox
-pip3 install pyrebase
+cd Smart-Mirror-Chatbot
+pip3 install -r requirements.txt
 ```
 -**Make Speech.sh executable**
 
